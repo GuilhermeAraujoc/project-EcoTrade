@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../Model/config/Conexao.php';
-require_once __DIR__ . '/../Model/PerfilModel.php';
+require_once __DIR__ . '/../Model/ModelPerfil.php';
 
 class PerfilController {
     private $perfilModel;
@@ -22,8 +22,8 @@ class PerfilController {
     public function exibirPerfil() {
         $this->verificarAutenticacao();
 
-        $id = $_SESSION['id'];
-        $tipo = $_SESSION['tipo'];
+        $id = $_SESSION['id_usuario'];
+        $tipo = $_SESSION['tipo_usuario'];
 
         switch ($tipo) {
             case 'admin':
@@ -97,7 +97,7 @@ class PerfilController {
             $htmlStr = str_replace('@cpf@', htmlspecialchars($dados['cpf'] ?? 'Não informado'), $htmlStr);
             $htmlStr = str_replace('@nome_fazenda@', htmlspecialchars($dados['nome_fazenda'] ?? 'Não informado'), $htmlStr);
             $htmlStr = str_replace('@localizacao@', htmlspecialchars($dados['localizacao'] ?? 'Não informado'), $htmlStr);
-            
+           //var_dump($dados);
             echo $htmlStr;
         } else {
             echo "Erro ao carregar perfil do produtor.";

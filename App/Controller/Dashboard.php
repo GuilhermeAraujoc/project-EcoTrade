@@ -2,22 +2,14 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
-
-// 1. Proteger a página: Verificar se o usuário está logado
 if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     header('Location: Login.php');
     exit;
 }
-
-// 2. Incluir conexão (será usada pelos includes)
 include __DIR__ . '/../Model/config/Conexao.php';
-
-// 3. Obter dados da sessão
 $nome = $_SESSION['nome'];
 $tipo_usuario = $_SESSION['tipo_usuario'];
 $id_usuario = $_SESSION['id_usuario']; // Essencial para as views
-
-// 4. Carregar o conteúdo específico baseado no tipo de usuário
 $conteudo_dashboard = '';
 
 if ($tipo_usuario == 'produtor') {
@@ -33,10 +25,7 @@ if ($tipo_usuario == 'produtor') {
     include '../View/dashboard/dashboard_admin.php';
     $conteudo_dashboard = ob_get_clean();
 }
-
-// Fechar a conexão aberta no início (e usada pelos includes)
 $conexao->close();
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -105,7 +94,7 @@ $conexao->close();
     <nav class="navbar">
         <a href="Dashboard.php" class="navbar-brand">EcoTrade</a>
         <div class="navbar-user">
-            Olá, <strong><?php echo htmlspecialchars($nome); ?></strong>
+            Olá, <a href="Perfil.php"><strong><?php echo htmlspecialchars($nome); ?></strong></a>
             (<?php echo htmlspecialchars($tipo_usuario); ?>)
             <a href="Logout.php">Sair</a>
         </div>

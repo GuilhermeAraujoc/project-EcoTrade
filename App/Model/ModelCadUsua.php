@@ -18,10 +18,9 @@ if ($stmt->errno) {
 $usuario_id = $stmt->insert_id;
 $stmt->close();
 
-// Inserir dados específicos conforme o tipo
 if ($tipo == 'produtor') {
     $cpf = $_POST['cpf'];
-    $nome_fazenda = $_POST['nomeFazenda']; // Corrigido para corresponder ao HTML
+    $nome_fazenda = $_POST['nomeFazenda'];
     $localizacao = $_POST['localizacao'];
 
     $sqlProdutor = "INSERT INTO produtores (usuario_id, cpf, nome_fazenda, localizacao) VALUES (?, ?, ?, ?)";
@@ -32,8 +31,8 @@ if ($tipo == 'produtor') {
 
 } elseif ($tipo == 'empresa') {
     $cnpj = $_POST['cnpj'];
-    $razao_social = $_POST['razaoSocial']; // Corrigido para corresponder ao HTML
-    $setor_atuacao = $_POST['setorAtuacao']; // Corrigido para corresponder ao HTML
+    $razao_social = $_POST['razaoSocial'];
+    $setor_atuacao = $_POST['setorAtuacao'];
 
     $sqlEmpresa = "INSERT INTO empresas (usuario_id, cnpj, razao_social, setor_atuacao) VALUES (?, ?, ?, ?)";
     $stmtEmp = $conexao->prepare($sqlEmpresa);

@@ -1,8 +1,5 @@
 <?php
 include __DIR__ . '/../Model/config/Conexao.php';
-
-// 1. Buscar transações públicas (sem dados sensíveis)
-// Juntando tabelas para obter nomes, conforme schema
 $sql_historico = "SELECT n.data_negociacao, n.quantidade, c.origem, p_user.nome AS nome_produtor, e_user.nome AS nome_empresa
                   FROM negociacoes n
                   JOIN creditos_carbono c ON n.credito_id = c.id
@@ -22,7 +19,6 @@ $conexao->close();
     <title>Histórico de Transações - EcoTrade</title>
     <link rel="stylesheet" href="../../Public/css/stytle.css"> 
     <style>
-        /* Estilos da página (copiados do Dashboard.php) */
         body { display: block; padding: 2rem; }
         .container { max-width: 75rem; margin: 0 auto; }
         .header { text-align: left; margin-bottom: 2rem; }

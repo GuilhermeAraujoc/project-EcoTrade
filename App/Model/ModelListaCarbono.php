@@ -1,7 +1,5 @@
 <?php
 require_once "config/Conexao.php";
-
-// Consulta os créditos de carbono e o nome do produtor
 $sql = "SELECT cc.id, cc.quantidade, cc.data_geracao, cc.status, p.nome_fazenda, u.nome AS nome_produtor
         FROM creditos_carbono cc
         INNER JOIN produtores p ON cc.produtor_id = p.id

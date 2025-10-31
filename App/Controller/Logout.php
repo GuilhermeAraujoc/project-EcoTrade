@@ -2,10 +2,7 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
-// Destrói todas as variáveis da sessão
 $_SESSION = array();
-
-// Apaga o cookie da sessão
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(session_name(), '', time() - 42000,
@@ -13,11 +10,7 @@ if (ini_get("session.use_cookies")) {
         $params["secure"], $params["httponly"]
     );
 }
-
-// Finalmente, destrói a sessão.
 session_destroy();
-
-// Redireciona para a página de login
 header("Location: Login.php");
 exit;
 ?>

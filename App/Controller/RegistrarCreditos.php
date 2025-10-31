@@ -2,7 +2,6 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
-// Proteção: Apenas produtores logados
 if (!isset($_SESSION['logado']) || $_SESSION['tipo_usuario'] !== 'produtor') {
     header('Location: Login.php');
     exit;
@@ -10,17 +9,12 @@ if (!isset($_SESSION['logado']) || $_SESSION['tipo_usuario'] !== 'produtor') {
 
 include __DIR__ . '/../Model/config/Conexao.php';
 $mensagem = '';
-
-// Se o formulário foi enviado (POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // 1. Obter dados do formulário
     $quantidade = $_POST['quantidade'];
     $origem = $_POST['origem'];
     $data_geracao = $_POST['data_geracao'];
     $usuario_id_logado = $_SESSION['id_usuario'];
     $produtor_id = null;
-
-    // 2. Obter o ID da tabela 'produtores' (baseado no usuario_id da sessão)
     $stmt_find = $conexao->prepare("SELECT id FROM produtores WHERE usuario_id = ?");
     $stmt_find->bind_param("i", $usuario_id_logado);
     $stmt_find->execute();
@@ -31,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $stmt_find->close();
 
-    // 3. Inserir na tabela 'creditos_carbono'
     if ($produtor_id) {
         $sql_insert = "INSERT INTO creditos_carbono (produtor_id, quantidade, origem, data_geracao, status) 
                        VALUES (?, ?, ?, ?, 'pendente')";
@@ -60,7 +53,6 @@ $conexao->close();
     <title>Registrar Créditos - EcoTrade</title>
     <link rel="stylesheet" href="../../Public/css/stytle.css">
     <style>
-        /* Estilos da página (copiados do Dashboard.php) */
         body { display: block; padding: 0; }
         .navbar { background-color: var(--card); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
         .navbar-brand { font-size: 1.5rem; font-weight: bold; color: var(--primary); text-decoration: none; }
