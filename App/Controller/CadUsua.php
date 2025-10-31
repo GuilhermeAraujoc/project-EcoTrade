@@ -1,6 +1,6 @@
 <?php
 session_start();
-include __DIR__ . '/../Model/config/conexao.php';
+include __DIR__ . '/../Model/config/Conexao.php';
 
 // Se for uma requisição AJAX (POST), responde em JSON
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
